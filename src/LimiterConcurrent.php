@@ -29,4 +29,10 @@ final class LimiterConcurrent
         return $this->concurrent->concurrent(fn () => $this->tokenBucket->removeTokens(1))->then($callback);
     }
 
+    // 返还令牌
+    public function release(int $num = 1)
+    {
+        $this->tokenBucket->addTokens($num);
+    }
+
 }
