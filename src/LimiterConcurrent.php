@@ -14,10 +14,10 @@ final class LimiterConcurrent
     protected bool $isQueue;
 
 
-    public function __construct(int $perInterval, int | string $interval = 1000, bool $isQueue = false)
+    public function __construct(int $perInterval, int | string $interval = 1000, bool $isQueue = false, int $maxLimit = 0)
     {
         $this->tokenBucket = new TokenBucket($perInterval, $perInterval, $interval);
-        $this->concurrent = new Concurrent(1, false);
+        $this->concurrent = new Concurrent(1, $maxLimit);
         $this->isQueue = $isQueue;
     }
 
