@@ -31,15 +31,9 @@ final class LimiterConcurrent
         return $this->concurrent->concurrent(fn () =>$this->messageQueueConcurrent->concurrent(fn () => $this->tokenBucket->removeTokens(1))->then($callback));
     }
 
-    public function tryAcquire(int $num = 1): bool
+    public function __call($method, $args)
     {
-        return $this->tokenBucket->tryRemoveTokens($num);
+        return $this->tokenBucket->$method(...$args);
     }
-
-    // 返还令牌
-    public function release(int $num = 1)
-    {
-        $this->tokenBucket->addTokens($num);
-    }
-
+    
 }
